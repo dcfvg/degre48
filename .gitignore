@@ -2,3 +2,8 @@
 /pdfs
 /raw
 /jpeg
+/links
+*.tiff
+*.pdf
+*.jpeg
+*.jpg
