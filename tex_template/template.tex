@@ -1,25 +1,26 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a3paper,10pt]{article}
+
+\usepackage[francais]{babel}
+\usepackage[top=5cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{graphicx}
+\graphicspath{{tex_template/links/}}
+
+\newlength{\hauteur}
+\setlength{\hauteur}{300px}
+
+
+ 
 \begin{document}
-
-The foundations of the rigorous study of \emph{analysis}
-were laid in the nineteenth century, notably by the
-mathematicians Cauchy and Weierstrass. Central to the
-study of this subject are the formal definitions of
-\emph{limits} and \emph{continuity}.
-
-Let $D$ be a subset of $\bf R$ and let
-$f \colon D \to \mathbf{R}$ be a real-valued function on
-$D$. The function $f$ is said to be \emph{continuous} on
-$D$ if, for all $\epsilon > 0$ and for all $x \in D$,
-there exists some $\delta > 0$ (which may depend on $x$)
-such that if $y \in D$ satisfies
-\[ |y - x| < \delta \]
-then
-\[ |f(y) - f(x)| < \epsilon. \]
-
-One may readily verify that if $f$ and $g$ are continuous
-functions on $D$ then the functions $f+g$, $f-g$ and
-$f.g$ are continuous. If in addition $g$ is everywhere
-non-zero then $f/g$ is continuous.
+\begin{tabular}{ccc}
+	\includegraphics[height=\hauteur]{01.jpeg} &
+	\includegraphics[height=\hauteur]{02.jpeg} &
+	\includegraphics[height=\hauteur]{03.jpeg}  \\
+	\includegraphics[height=\hauteur]{04.jpeg} &
+	%\includegraphics[height=\hauteur]{05.jpeg} &
+	%\includegraphics[height=\hauteur]{06.jpeg} \\
+	%\includegraphics[height=\hauteur]{07.jpeg} &
+	%\includegraphics[height=\hauteur]{08.jpeg} &
+	%\includegraphics[height=\hauteur]{09.jpeg} \\
+\end{tabular}
 
 \end{document}

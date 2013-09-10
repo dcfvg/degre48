@@ -8,7 +8,7 @@ function allscan48 {
   now=$(date +"%y.%m.%d-%H.%M.%S")
  	
  	echo "scan 01             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:010 -p > $rawDir/01.tiff
+	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:021 -p > $rawDir/01.tiff
 	poster48 $1 $2 $3
 	
 	echo "scan 02             "
@@ -16,11 +16,11 @@ function allscan48 {
 	poster48 $1 $2 $3
 	
 	echo "scan 03             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:011 -p > $rawDir/03.tiff
+	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:018 -p > $rawDir/03.tiff
 	poster48 $1 $2 $3
 	
 	echo "scan 04             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d snapscan:libusb:001:017 -p > $rawDir/04.tiff
+	scanimage --format tiff --mode Gray --resolution $dpi -d snapscan:libusb:001:019 -p > $rawDir/04.tiff
   poster48 $1 $2 $3
 }
 function poster48 {
@@ -35,12 +35,11 @@ function poster48 {
   
   pdflatex tex_template/template.tex
   mv template.pdf $pdfDir$now.pdf
-   
 }
-#while true; do
+cd ~/Documents/scan48
+while true; do
   clear
-	#allscan48 raw/ links/ outbox/
-	poster48 raw/ links/ outbox/
-	
-#done
+	allscan48 raw/ tex_template/links/ outbox/
+	#poster48 raw/ tex_template/links/ outbox/
+done
 

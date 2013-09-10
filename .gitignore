@@ -7,3 +7,9 @@
 *.pdf
 *.jpeg
 *.jpg
+/tex_template/links
+/tex_template/template.aux
+/tex_template/template.log
+/template.log
+/template.aux
+/missfont.log
