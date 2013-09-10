@@ -16,11 +16,17 @@ function allscan48 {
 	echo "scan 03             "
 	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:011 -p > $rawDir/03.tiff
 	
-	echo "$rawDir > jpeg > $scaDir"
-  mogrify -path $scaDir/ -format jpeg "$rawDir*.tiff" 
-  
+	echo "scan 04             "
+	scanimage --format tiff --mode Gray --resolution $dpi -d snapscan:libusb:001:017 -p > $rawDir/04.tiff
+ 
+  poster48 $1 $2 $3
+}
+function poster48 {
+  echo "conversion"
+ 	echo "$rawDir > jpeg > $scaDir"
+  mogrify -path $scaDir/ -format jpeg "$rawDir*.tiff"
 }
 while true; do
   clear
-	allscan48 raw/ links/
+	allscan48 raw/ links/ outbox/
 done
