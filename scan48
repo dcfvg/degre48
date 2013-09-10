@@ -9,24 +9,38 @@ function allscan48 {
  	
  	echo "scan 01             "
 	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:010 -p > $rawDir/01.tiff
+	poster48 $1 $2 $3
 	
 	echo "scan 02             "
 	scanimage --format tiff --mode Gray --resolution $dpi -d hpaio:/usb/PSC_1600_series?serial=MY54PD10RQL0 -p > $rawDir/02.tiff
+	poster48 $1 $2 $3
 	
 	echo "scan 03             "
 	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:011 -p > $rawDir/03.tiff
+	poster48 $1 $2 $3
 	
 	echo "scan 04             "
 	scanimage --format tiff --mode Gray --resolution $dpi -d snapscan:libusb:001:017 -p > $rawDir/04.tiff
- 
   poster48 $1 $2 $3
 }
 function poster48 {
+  rawDir=$1   # raw directory
+  scaDir=$2   # scan directory for latex (jpeg)
+  pdfDir=$3   # pdf directory for print
+  now=$(date +"%y.%m.%d-%H.%M.%S")
+  
   echo "conversion"
  	echo "$rawDir > jpeg > $scaDir"
   mogrify -path $scaDir/ -format jpeg "$rawDir*.tiff"
+  
+  pdflatex tex_template/template.tex
+  mv template.pdf $pdfDir$now.pdf
+   
 }
-while true; do
+#while true; do
   clear
-	allscan48 raw/ links/ outbox/
-done
+	#allscan48 raw/ links/ outbox/
+	poster48 raw/ links/ outbox/
+	
+#done
+
