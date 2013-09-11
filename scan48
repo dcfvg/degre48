@@ -8,7 +8,7 @@ function allscan48 {
   now=$(date +"%y.%m.%d-%H.%M.%S")
  	
  	echo "scan 01             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:021 -p > $rawDir/01.tiff
+	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:007 -p > $rawDir/01.tiff
 	poster48 $1 $2 $3
 	
 	echo "scan 02             "
@@ -16,12 +16,17 @@ function allscan48 {
 	poster48 $1 $2 $3
 	
 	echo "scan 03             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:018 -p > $rawDir/03.tiff
+	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:008 -p > $rawDir/03.tiff
 	poster48 $1 $2 $3
 	
 	echo "scan 04             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d snapscan:libusb:001:019 -p > $rawDir/04.tiff
+	scanimage --format tiff --mode Gray --resolution $dpi -d snapscan:libusb:001:012 -p > $rawDir/04.tiff
   poster48 $1 $2 $3
+  
+  echo "webcam 05           "
+  streamer -f jpeg -s 1920x1080 -o $scaDir/05-webcam.jpeg
+  poster48 $1 $2 $3
+  
 }
 function poster48 {
   rawDir=$1   # raw directory
@@ -29,17 +34,19 @@ function poster48 {
   pdfDir=$3   # pdf directory for print
   now=$(date +"%y.%m.%d-%H.%M.%S")
   
-  echo "conversion"
+  echo "conversion          "
  	echo "$rawDir > jpeg > $scaDir"
   mogrify -path $scaDir/ -format jpeg "$rawDir*.tiff"
   
-  pdflatex tex_template/template.tex
+  echo "-> $now.pdf"
+  echo "—\n"
+  pdflatex tex_template/template.tex >/dev/null
   mv template.pdf $pdfDir$now.pdf
 }
 cd ~/Documents/scan48
+
 while true; do
   clear
 	allscan48 raw/ tex_template/links/ outbox/
-	#poster48 raw/ tex_template/links/ outbox/
 done
 
