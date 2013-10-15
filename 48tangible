@@ -1,0 +1,59 @@
+function 48printloop {
+  # var
+  dir=~/Desktop
+  inboxname=deg48
+  printer=C224e_Labos                    # labos
+  #printer=HP_LaserJet_CP1525nw__3F0AFD_ # hp116
+
+  freq=10
+  dpi="220x220"
+  # processing
+  echo '
+  --
+  scan …'
+  date +"%T         "
+
+
+  for f in `find $dir/$inboxname -iname "*.JPG"`
+    do
+
+      # get file info
+      NAME=$(basename $f)
+      TIME=$(identify -format %[EXIF:DateTime] $f)
+      
+      
+      echo "$NAME @ $TIME"
+     
+      # image adjustment
+      printf '  -> levels \r'  
+      convert -type Grayscale -density $dpi -auto-orient -sigmoidal-contrast 8x10% $f $f.pdf
+
+      # lanch printing
+      #printf '  -> print ! \r' 
+      #lpr -P $printer -o media=A3 $f.pdf    #-o orientation-requested=4
+    
+      # remove jpg version
+      printf '  -> delete \r' 
+      
+      mv $f $dir"/origin/"$NAME
+      #rm $f
+      
+    
+      printf '  -> ok              \r'
+
+    done
+
+  # countdown 
+}
+
+while true; do
+  clear
+  48printloop
+    
+  for (( i=5; i>0; i--)); do
+    sleep 1 &
+    printf "48 in $i s \r"
+    wait    
+    printf "              \r"
+  done
+done
