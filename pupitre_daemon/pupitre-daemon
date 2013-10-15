@@ -1,0 +1,85 @@
+# set -x
+function 48inbox {
+  
+  inbox=$1
+  outbox=$2
+              # 2337 x 3306 > 200 dpi = 779x1102
+              # 3508 x 4961 > 300 dpi
+  zonew=779  
+  zoneh=1102  
+  dpi="300x300"
+  
+  zprevw=256  # for 768*1024
+  zprevh=341
+  
+  tmpinfo="tmp.png"
+  
+  for doc in `find $inbox \( -iname \*.png -o -iname \*.jpg -o -iname \*.jpeg -o -iname \*.gif \) -type f`
+  do
+    box=$(basename $(dirname $doc))   # contribution path
+    docname=$(basename $doc)          # contribution file
+    
+    filetime=$(perl -MPOSIX -le 'print strftime "%s",localtime ((stat $ARGV[0])[9])' $doc)
+    filetimehuman=$(perl -MPOSIX -le 'print strftime "%H:%M",localtime ((stat $ARGV[0])[9])' $doc)
+    
+    now=$(date +"%y.%m.%d-%H.%M.%S")
+
+    dest="/c-"${box:0:2}"/"
+    filename=$filetime"-"$docname
+    
+    printf "\n $filetimehuman |$box| $docname > $filename"
+    
+
+    
+    convert $doc -colorspace Gray -background black -format jpg -auto-orient -gravity NorthWest\
+    -resize "x"$zoneh -extent "x"$zoneh -density $dpi\
+    -fill white  -undercolor '#000000' -pointsize 11 -font Courier -gravity NorthWest \
+    -annotate +40+40 "${box:3:140} / $filetimehuman"\
+    $outbox$dest"/hd/"$filename
+    
+    convert -resize "x"$zprevh $outbox$dest"/hd/"$filename $outbox$dest"/"$filename
+    
+    mv $doc "archives/"$box
+    
+  done
+  
+}
+function 48print {
+  dir=$1
+  
+  printer=C224e_Labos                    # labos
+  #printer=HP_LaserJet_CP1525nw__3F0AFD_ # hp116
+  
+  filetype="pdf"
+  tmp="timer.pdf"
+  
+  detox -vr $dir
+  
+  for step in `find $dir -iname "*.jpeg" -type f`
+  do
+    stepname=$(basename $step)
+    
+    convert $step -format pdf $step".pdf"
+
+    echo $step".pdf"
+    
+    lpr -P $printer -o media=A3 -o fit-to-page $step".pdf"
+    
+    rm $step
+  done
+}
+
+while true; do
+  clear
+  detox -vr inbox/*
+  
+  48print outbox/
+  48inbox inbox/ data/test-set/
+    
+  for (( i=30; i>0; i--)); do
+    sleep 1 &
+    printf "48 in $i s \r"
+    wait    
+    printf "              \r"
+  done
+done
