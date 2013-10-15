@@ -1,0 +1,113 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }  
+         
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>48-virtuel.sikuli</h2> <a href="48-virtuel.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+Settings.MoveMouseDelay = <span class="dig">0</span>
+Settings.DelayAfterDrag = <span class="dig">0</span>
+Settings.DelayBeforeDrop = <span class="dig">0</span>
+Settings.MoveMouseDelay = <span class="dig">0</span>
+
+<span class="kw">def</span> getPDF():
+
+    App.focus(<span class="str">"Google Chrome"</span>)
+
+    <span class="cmt"># aller dans le menu et prendre le pdf
+</span>
+    zone = Region(<span class="dig">3</span>,<span class="dig">99</span>,<span class="dig">675</span>,<span class="dig">806</span>)
+    fichier = <img src="Fichier.png" />
+    zone.<span class="skw">wait</span>(fichier,FOREVER)
+    zone.<span class="skw">click</span>(fichier)
+
+    telecharger = <img src="Tlchargerauf.png" />
+    zone.<span class="skw">wait</span>(telecharger,FOREVER)
+    zone.<span class="skw">click</span>(telecharger)
+
+    pdf = <img src="DocumentPDFp.png" />
+    zone.<span class="skw">wait</span>(pdf,FOREVER)
+    zone.<span class="skw">click</span>(pdf)
+
+
+    <span class="cmt"># fermer la zone de notif de chrome 
+</span>    <span class="cmt">#zone2 = Region(0,689,731,210)
+</span>    <span class="cmt">#toutaff =  
+</span>
+    <span class="cmt">##zone2.wait(toutaff,FOREVER)
+</span>    <span class="cmt">##zone2.click(toutaff)
+</span>
+    <span class="skw">wait</span>(<span class="dig">7</span>)
+    getPDF()
+
+    <span class="kw">pass</span>
+
+getPDF()
+</pre>
+</body>
+</html>

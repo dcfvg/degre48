@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#clear
+#set -x
+
+function 48print {
+  dir=/Users/benoit/Downloads
+  
+  printer=C224e_Labos                    # labos
+  #printer=HP_LaserJet_CP1525nw__3F0AFD_ # hp116
+  filetype="pdf"
+  tmp="timer.pdf"
+  
+  detox -vr $dir
+  
+  now=$(date +"%y.%m.%d-%H.%M.%S")
+  # screencapture -m ~/Desktop/captures/$now.png
+  
+  for step in `find $dir -iname "*.pdf" -type f | xargs ls -rt`
+  do
+    stepname=$(basename $step)
+    filetime=$(perl -MPOSIX -le 'print strftime "%s",localtime ((stat $ARGV[0])[9])' $step)
+    filetimehuman=$(perl -MPOSIX -le 'print strftime "%d/%m/%Y %H:%M:%S",localtime ((stat $ARGV[0])[9])' $step)
+    archivename=$filetime.$stepname
+    archive="/Users/benoit/Desktop/outbox/"$archivename
+    
+    convert -pointsize 18 -font Courier -fill black -gravity center -bordercolor white -border 20x20\
+            label:"$filetimehuman" $tmp 
+            
+    composite $tmp -type Grayscale -gravity NorthWest -geometry "+10+50" $step $archive
+
+    echo $stepname " @ " $filetimehuman " -> " $archivename
+    
+    lpr -P $printer -o media=A3 -o fit-to-page $archive
+    
+    rm $tmp
+    rm $step
+  done
+
+}
+while true; do
+    48print
+    for (( i=$1; i>0; i--)); do
+      sleep 1 &
+      printf "next in $i s \r"
+      wait
+    done
+    printf "              \r"
+    images-processing
+done
