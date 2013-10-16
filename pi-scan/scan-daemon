@@ -30,7 +30,7 @@ function scan {
   
   echo "scan A4                     "
 	scanimage --format tiff --resolution $dpi -d epson2:libusb:001:007 -p > $assets/A4.tiff
-	convert -format png "A4.tiff" -fuzz $fuzz% -transparent "#00FF00" -modulate 100,0 A4.png
+	convert -format png "$assets/A4.tiff" -fuzz $fuzz% -transparent "#00FF00" -modulate 100,0 A4.png
   
 }
 
