@@ -31,8 +31,8 @@ def getPDF():
     ##zone2.click(toutaff)
 
     wait(7)
-    getPDF()
     
     pass
 
-getPDF()
+while 1:
+    getPDF()
