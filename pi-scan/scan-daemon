@@ -10,6 +10,10 @@ echo "Setting resolution to $dpi dpi"
 fuzz=${3-40}
 echo "Setting fuzz for keying to $fuzz%"
 
+
+assets=assets
+mkdir $assets
+
 function scan {
   now=$(date +"%y.%m.%d-%H.%M.%S")
   
@@ -19,7 +23,7 @@ function scan {
   #
   
  	echo "scan A3 Epson ES-7000H      "
-	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:009 -p > $assets/A3.tiff
+	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:006 -p > $assets/A3.tiff
   
 	convert -monitor -format png $assets/A3.tiff -auto-level -threshold 60%\
   -transparent white -negate $assets/A3.png
