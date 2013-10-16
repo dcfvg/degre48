@@ -1,7 +1,9 @@
 #!/bin/bash
 #set -x
 
-freq=$1
+freq=${1-5}
+echo "Setting frequence to $freq s"
+
 mkdir -v assets/
 assets="assets"
 
