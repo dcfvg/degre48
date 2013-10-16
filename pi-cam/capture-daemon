@@ -1,0 +1,22 @@
+#!/bin/bash
+#set -x
+
+freq=$1
+mkdir -v assets/
+assets="assets"
+
+function capture {
+  echo "webcam HD                   "
+  streamer -f jpeg -s 1920x1080 -o webcam.jpg
+  convert -monitor $assets/webcam.jpg -modulate 100,0 $assets/webcam.jpg
+}
+
+while true; do
+  capture
+  for (( i=$freq; i>0; i--)); do
+    sleep 1 &
+    printf "next shot in $i s \r"
+    wait    
+    printf "              \r"
+  done
+done
