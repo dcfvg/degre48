@@ -7,14 +7,13 @@ function 48print {
   dir=/Users/benoit/Downloads
   
   printer=C224e_Labos                    # labos
-  #printer=HP_LaserJet_CP1525nw__3F0AFD_ # hp116
+
   filetype="pdf"
   tmp="timer.pdf"
   
   detox -vr $dir
   
   now=$(date +"%y.%m.%d-%H.%M.%S")
-  # screencapture -m ~/Desktop/captures/$now.png
   
   for step in `find $dir -iname "*.pdf" -type f | xargs ls -rt`
   do
