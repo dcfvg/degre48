@@ -2,14 +2,14 @@
 
 echo "creating assets ..."
 
-mkdir -v assets assets/01-sources
+mkdir -v assets 
 
-cd assets/01-sources
-mkdir -v cam01/ cam02/ ipad/ mobile/ scanA3/
+cd assets
+mkdir -v 01-printbox/ 02-archives/
 
-cd ../  # back to assets
-mkdir -v 02-latexlinks/ 03-printbox/ 04-archives/
+cd 02-archives
+mkdir -v cam01/ cam02/ A3-trace/ A4-docs/
 
-cd ../  # back to root
+cd ../../  # back to root
 
 echo "done"
