@@ -1,15 +1,18 @@
 #!/bin/bash
+# set -x
 
-pathcam01="~/webcam"
-pathcam02="~/webcam"
-pathscan="~/scan"
-
-assets="assets"
+assets="assets/"
 
 printbox=$assets"01-printbox"
 archives=$assets"02-archives"
 
+pathcam01=$assets"pi/p-a"
+pathcam02="~/webcam"
+pathscan=$assets"pi/pi-a/"
+
 texlinks="tex_template/links"
+
+ls -l $pathscan
 
 function getfrompi (){
   now=$(date +"%y.%m.%d-%H.%M.%S")
@@ -18,7 +21,7 @@ function getfrompi (){
   cp -v "$pathcam01/webcam.jpg"        $archives"/cam01/$now.jpg"
   cp -v "$pathcam02/webcam.jpg"        $archives"/cam02/$now.jpg"
   cp -v "$pathscan/A3.png"             $archives"/A3-trace/$now.png"
-  cp -v "$pathcam02/A4.png"            $archives"/A4-docs/$now.png"
+  cp -v "$pathscan/A4.png"             $archives"/A4-docs/$now.png"
   
   # to latexlinks
   cp -v "$archives/cam01/$now.jpg"     $texlinks"/cam01.jpg"
