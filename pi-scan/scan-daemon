@@ -1,0 +1,31 @@
+#!/bin/bash
+#set -x
+
+freq=${1-5}
+echo "Setting frequence to $freq s"
+
+dpi=${2-5}
+echo "Setting resolution to $dpi dpi"
+
+mkdir -v assets/
+assets="assets"
+
+function scan {
+  now=$(date +"%y.%m.%d-%H.%M.%S")
+  
+ 	echo "scan A3 Epson ES-7000H      "
+	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:009 -p > $assets/A3.tiff
+  
+	convert -monitor -format png $assets/A3.tiff -auto-level -threshold 60%\
+  -transparent white -negate $assets/A3.png
+}
+
+while true; do
+  scan
+  for (( i=$freq; i>0; i--)); do
+    sleep 1 &
+    printf "next shot in $i s \r"
+    wait    
+    printf "                  \r"
+  done
+done
