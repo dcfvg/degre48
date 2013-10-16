@@ -7,8 +7,8 @@ echo "Setting frequence to $freq s"
 dpi=${2-5}
 echo "Setting resolution to $dpi dpi"
 
-mkdir -v assets/
-assets="assets"
+fuzz=${3-40}
+echo "Setting resolution to $dpi dpi"
 
 function scan {
   now=$(date +"%y.%m.%d-%H.%M.%S")
@@ -18,6 +18,11 @@ function scan {
   
 	convert -monitor -format png $assets/A3.tiff -auto-level -threshold 60%\
   -transparent white -negate $assets/A3.png
+  
+  echo "scan A4                     "
+	scanimage --format tiff --resolution $dpi -d epson2:libusb:001:009 -p > $assets/A4.tiff
+	convert -format png "A4.tiff" -fuzz $fuzz% -transparent "#00FF00" -modulate 100,0 A4.png
+  
 }
 
 while true; do
