@@ -5,10 +5,11 @@
 \usepackage[a3paper]{geometry}
 \usepackage{color}
 \usepackage{graphicx}
-\usepackage{DejaVuSans}
+%\usepackage{DejaVuSans}
 \renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
 \usepackage[T1]{fontenc}
 \usepackage{anyfontsize}
+\usepackage[ddmmyyyy,hhmmss]{datetime}
 
 
 \setlength{\TPHorizModule}{1mm}
@@ -21,88 +22,42 @@
 
 %Image de fond%
 \begin{textblock*}{330mm}(-6mm,0mm)%
-	\includegraphics[width=330mm]{06.jpeg}
+	\includegraphics[width=330mm]{photo.jpeg}
 \end{textblock*}
 
 %Image en haut à gauche%
-\begin{textblock*}{122mm}(9mm,21mm)%
-	\includegraphics[angle=90, width=122mm]{05-webcam.jpeg}
+\begin{textblock*}{122mm}(9mm,17mm)%
+	\includegraphics[angle=0, width=122mm]{webcam.jpeg}
 \end{textblock*}
 
-%Image au milieu a gauche%
-\begin{textblock*}{122mm}(9mm,175mm)%
-	\includegraphics[angle=90, width=122mm]{01.jpeg}
-\end{textblock*}
-
-%Image en bas a gauche --> A3%
-\begin{textblock*}{177mm}(9mm,271mm)%
-	\includegraphics[angle=90, width=177mm]{03.jpeg}
+%Image en bas a gauche%
+\begin{textblock*}{122mm}(9mm,321mm)%
+	\includegraphics[angle=90, width=122mm]{03.jpeg}
 \end{textblock*}
 
 %Image en haut à droite%
-\begin{textblock*}{90mm}(191mm,83mm)%
-	\includegraphics[width=90mm]{02.jpeg}
+\begin{textblock*}{90mm}(191mm,153mm)%
+	\includegraphics[width=90mm]{01.jpeg}
 \end{textblock*}
 
 %Image en bas à droite%
-\begin{textblock*}{90mm}(191mm,208mm)%
-	\includegraphics[width=90mm]{04.jpeg}
+\begin{textblock*}{90mm}(191mm,285mm)%
+	\includegraphics[angle=180, width=90mm]{02.jpeg}
+\end{textblock*}
+
+%Image surimpression --> A3%
+\begin{textblock*}{297mm}(0mm,0mm)%
+	\includegraphics[angle=0, width=297mm]{A3.png}
 \end{textblock*}
 
 %Bloc Texte Légendes%
 \TPMargin{5mm}
-\begin{textblock*}{50mm}[0,0](238mm,364mm)
+\begin{textblock*}{30mm}[0,0](255mm,17mm)
 \noindent
-1. Légendes \\
-2. Légendes \\
-3. Légendes \\
-4. Légendes \\
-5. Légendes \\
-6. Légendes 
+\today \\
+\currenttime
 \textblockcolour{white}
 \end{textblock*}
 
 \TPMargin{3mm}
-\begin{textblock*}{10mm}[0,0](285mm,410mm)
-\noindent
-\color{white}
-1
-\textblockcolour{black}
-\end{textblock*}
-
-\begin{textblock*}{10mm}[0,0](128mm,105mm)
-\noindent
-\color{white}
-2
-\textblockcolour{black}
-\end{textblock*}
-
-\begin{textblock*}{10mm}[0,0](128mm,257mm)
-\noindent
-\color{white}
-3
-\textblockcolour{black}
-\end{textblock*}
-
-\begin{textblock*}{10mm}[0,0](184mm,396mm)
-\noindent
-\color{white}
-4
-\textblockcolour{black}
-\end{textblock*}
-
-\begin{textblock*}{10mm}[0,0](278mm,195mm)
-\noindent
-\color{white}
-5
-\textblockcolour{black}
-\end{textblock*}
-
-\begin{textblock*}{10mm}[0,0](278mm,320mm)
-\noindent
-\color{white}
-6
-\textblockcolour{black}
-\end{textblock*}
-
 \end{document}

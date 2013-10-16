@@ -1,38 +1,44 @@
 #!/bin/bash
 
 #set -x
+
 function allscan48 {
+  
   rawDir=$1   # raw directory
   lnkDir=$2   # scan directory for latex (jpeg)
   pdfDir=$3   # pdf directory for print
   picDir=$4   # picture directory from mobiles
   
   now=$(date +"%y.%m.%d-%H.%M.%S")
- 	
  	dpi=100
   
- 	echo "scan 01             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:009 -p > $rawDir/01.tiff
+ 	echo "scan A3 Epson ES-7000H      "
+	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:009 -p > $rawDir/A3.tiff
+  
+	convert -monitor -format png $rawDir/A3.tiff -auto-level -threshold 60%\
+  -transparent white -negate $lnkDir/A3.png
 	poster48 $1 $2 $3 $4
 	
-	echo "scan 02             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d hpaio:/usb/PSC_1600_series?serial=MY54PD10RQL0 -p > $rawDir/02.tiff
+	echo "scan A4 Epson Perfection1640"
+	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:007 -p > $rawDir/01.tiff
 	poster48 $1 $2 $3 $4
 	
-	echo "scan 03             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d epson2:libusb:001:010 -p > $rawDir/03.tiff
+	echo "scan A4 AGFA SNAPSCAN       "
+	scanimage --format tiff --mode Gray --resolution $dpi -d snapscan:libusb:001:005 -p > $rawDir/02.tiff
 	poster48 $1 $2 $3 $4
 	
-	echo "scan 04             "
-	scanimage --format tiff --mode Gray --resolution $dpi -d snapscan:libusb:001:008 -p > $rawDir/04.tiff
+	echo "scan A4 HP PSC_1600         "
+	scanimage --format tiff --mode Gray --resolution $dpi -d hpaio:/usb/PSC_1600_series?serial=MY54PD10RQL0 -p > $rawDir/03.tiff
   poster48 $1 $2 $3 $4
   
-  echo "webcam 05           "
-  streamer -f jpeg -s 1920x1080 -o $lnkDir/05-webcam.jpeg
-  poster48 $1 $2 $3 $4
+  echo "webcam HD                   "
+  streamer -f jpeg -s 1920x1080 -o $rawDir/webcam.jpeg
+  convert -monitor $rawDir/webcam.jpeg -modulate 100,0 -separate -average $lnkDir/webcam.jpeg
   
+  poster48 $1 $2 $3 $4
 }
 function poster48 {
+  
   lastphoto48 $1 $2 $3 $4
   
   rawDir=$1   # raw directory
@@ -42,18 +48,16 @@ function poster48 {
   
   now=$(date +"%y.%m.%d-%H.%M.%S")
   
-  echo "conversion          "
  	echo "$rawDir > jpeg > $lnkDir"
-  mogrify -path $lnkDir/ -format jpeg "$rawDir*.tiff"
+  mogrify -monitor -path $lnkDir/ -format jpeg $rawDir"0*.tiff"
   
+  pdflatex tex_template/template_float_img.tex >/dev/null
+  mv template_float_img.pdf $pdfDir$now.pdf
   echo "-> $now.pdf"
   echo "___"
-  pdflatex tex_template/template_float_img.tex #>/dev/null
-  mv template_float_img.pdf $pdfDir$now.pdf
 }
 function lastphoto48 {
   #pwd
-  
   rawDir=$1   # raw directory
   lnkDir=$2   # scan directory for latex (jpeg)
   pdfDir=$3   # pdf directory for print
@@ -66,16 +70,19 @@ function lastphoto48 {
   for pic in `find /home/pi/Documents/scan48/photo-inbox/ -iname "*.jpg" -type f -print -quit`
   do    
     echo "* new picture : $pic *"
-    cp -f $pic $lnkDir"06.jpg"
+    convert -format jpeg -modulate 120,0 -auto-orient $pic $lnkDir"photo.jpeg"
     mv $pic "photo-archive/$(basename $(dirname $pic))/$(basename $pic)"
   done
-
 }
 
 cd ~/Documents/scan48
-
-#while true; do
-  clear
+while true; do
+  START=$(date +%s.%N)
+  echo "start @$START"
 	allscan48 raw/ tex_template/links/ outbox/ photo-inbox/
-#done
+	
+	END=$(date +%s.%N)
+  DIFF=$(echo "$END - $START" | bc)
+  clear
+done
 

@@ -8,3 +8,5 @@
 /tex_template/links
 /photo-inbox
 .SyncArchive
+*.fdb_latexmk
+*.gz
