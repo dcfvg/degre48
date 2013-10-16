@@ -22,13 +22,12 @@ function scan {
   # 2. copy the adress ( ex. epson2:libusb:001:006 ) to the -d param
   #
   
- 	echo "scan A3 Epson ES-7000H      "
+  	echo "scan A3 Epson ES-7000H      "
 	scanimage --format tiff --resolution $dpi -d epson2:libusb:001:006 -p > $assets/A3.tiff
   
-	convert -monitor -format png $assets/A3.tiff -auto-level -threshold 60%\
-  -transparent white -negate $assets/A3.png
+	convert -monitor -format png $assets/A3.tiff -transparent white -negate $assets/A3.png
   
-  echo "scan A4                     "
+  	echo "scan A4                     "
 	scanimage --format tiff --mode Color --resolution $dpi -d epson2:libusb:001:008 -p > $assets/A4.tiff
 	convert -format png "$assets/A4.tiff" -fuzz $fuzz% -transparent "#00FF00" -modulate 100,0 $assets/A4.png
   
