@@ -4,11 +4,11 @@
 freq=${1-5}
 echo "Setting frequence to $freq s"
 
-dpi=${2-5}
+dpi=${2-100}
 echo "Setting resolution to $dpi dpi"
 
 fuzz=${3-40}
-echo "Setting resolution to $dpi dpi"
+echo "Setting fuzz for keying to $fuzz%"
 
 function scan {
   now=$(date +"%y.%m.%d-%H.%M.%S")
