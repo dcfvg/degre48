@@ -11,7 +11,7 @@ function capture {
   echo "webcam HD                   "
   # streamer -f jpeg -s 1920x1080 -o webcam.jpg
   
-  fswebcam -r 1920x1080 assets/webcam.jpg
+  fswebcam -r 1920x1080 $assets/webcam.jpg
   convert -monitor $assets/webcam.jpg -modulate 100,0 $assets/webcam.jpg
 }
 
