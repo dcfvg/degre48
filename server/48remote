@@ -1,0 +1,68 @@
+#!/bin/bash
+
+pathcam01="~/webcam"
+pathcam02="~/webcam"
+pathscan="~/scan"
+
+assets="assets"
+
+printbox=$assets"01-printbox"
+archives=$assets"02-archives"
+
+texlinks="tex_template/links"
+
+function getfrompi (){
+  now=$(date +"%y.%m.%d-%H.%M.%S")
+  
+  # to archives
+  cp -v "$pathcam01/webcam.jpg"        $archives"/cam01/$now.jpg"
+  cp -v "$pathcam02/webcam.jpg"        $archives"/cam02/$now.jpg"
+  cp -v "$pathscan/A3.png"             $archives"/A3-trace/$now.png"
+  cp -v "$pathcam02/A4.png"            $archives"/A4-docs/$now.png"
+  
+  # to latexlinks
+  cp -v "$archives/cam01/$now.jpg"     $texlinks"/cam01.jpg"
+  cp -v "$archives/cam02/$now.jpg"     $texlinks"/cam02.jpg"
+  cp -v "$archives/A3-trace/$now.png"  $texlinks"/A3.png"
+  cp -v "$archives/A4-docs/$now.png"   $texlinks"/A4.png"
+  
+}
+function compilePDF (){
+  pdflatex tex_template/template_float_img.tex
+  mv -v template_float_img.pdf $printbox$now.pdf
+}
+function print {
+  
+  inbox=$1
+  outbox=$2
+  
+  printer=C224e_Labos                    # labos
+
+  detox -vr $inbox
+  
+  for step in `find $inbox -iname "*.pdf" -type f`
+  do
+    stepname=$(basename $step)
+    archivePath=$outbox$stepname
+    
+    mv -v $step $archivePath # copy in outbox (archives)
+    lpr -P $printer -o media=A3 -o ColorModel=KGray -o fit-to-page $archivePath
+    
+  done
+}
+#!/bin/bash
+interval=${1-16}
+
+while true; do
+  
+  getfrompi
+  compilePDF
+  print $printbox $archives"/printedpdf/"
+  
+  for (( i=$interval; i>0; i--)); do
+    sleep 1 &
+    printf "next print in $i s \r"
+    wait    
+    printf "                   \r"
+  done
+done
