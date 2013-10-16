@@ -15,3 +15,4 @@ How to see artists performance and making images at the same time
 - detox 			( filename sanitize )
 - latex				( pdf generation )
 - sane 				( scanner )
+
