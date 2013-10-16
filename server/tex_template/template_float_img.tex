@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+
+\usepackage[absolute,overlay]{textpos}
+\usepackage[utf8]{inputenc}
+\usepackage[a3paper]{geometry}
+\usepackage{color}
+\usepackage{graphicx}
+%\usepackage{DejaVuSans}
+\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+\usepackage[T1]{fontenc}
+\usepackage{anyfontsize}
+\usepackage[ddmmyyyy,hhmmss]{datetime}
+
+
+\setlength{\TPHorizModule}{1mm}
+\setlength{\TPVertModule}{1mm}
+\graphicspath{{links/}}
+
+
+
+\begin{document}
+
+% >> camera 2%
+\begin{textblock*}{350mm}(-32mm,0mm)
+	\includegraphics[width=350mm]{cam01.jpg}
+\end{textblock*}
+
+% >> camera 1%
+\begin{textblock*}{350mm}(-32mm,210mm)
+	\includegraphics[angle=0, width=350mm]{cam02.jpg}
+\end{textblock*}
+
+% >> documents%
+\begin{textblock*}{350mm}(-6mm,0mm)%
+	\includegraphics[height=420mm]{A4.jpg}
+\end{textblock*}
+
+% >> trace%
+\begin{textblock*}{350mm}(-6mm,0mm)%
+	\includegraphics[width=297mm]{A3.png}
+\end{textblock*}
+
+\TPMargin{3mm}
+\end{document}
