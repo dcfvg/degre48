@@ -11,3 +11,8 @@
 *.tmproj
 
 assets
+
+*.png
+
+*.aux
+*.log
