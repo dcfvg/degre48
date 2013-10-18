@@ -1,9 +1,6 @@
 #!/bin/bash
-
 mkdir -v ~/Desktop/live/
-epath=$(dirname $0)
-
-cd $(pwd)
+cd "$(pwd)/assets/03-timelaps/"
 
 while true; do
 
