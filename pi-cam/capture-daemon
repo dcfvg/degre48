@@ -13,6 +13,9 @@ function capture {
   
   fswebcam -r 1920x1080 $assets/webcam.jpg
   convert -monitor $assets/webcam.jpg -modulate 100,0 $assets/webcam.jpg
+  
+  now=$(date +"%y.%m.%d-%H.%M.%S")
+  cp $assets/webcam.jpg $assets/$now.jpg
 }
 
 while true; do
