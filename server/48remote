@@ -7,9 +7,9 @@ printbox=$assets"01-printbox"
 archives=$assets"02-archives"
 replay=$assets"03-replay"
 
-pathcam01=$assets"pi/p-a"
-pathcam02="~/webcam"
-pathscan=$assets"pi/pi-a/"
+pathcam01=$assets"pi/pi-a"
+pathcam02=$assets"pi/pi-b"
+pathscan=$assets"pi/pi-c/"
 
 texlinks="tex_template/links"
 
