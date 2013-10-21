@@ -16,4 +16,4 @@ How to see artists performance and making images at the same time
 - latex				( pdf generation )
 - sane 				( scanner )
 - fswebcam    ( webcam snapshot)
-
+- ffmpeg      ( replay )
