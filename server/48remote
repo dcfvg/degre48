@@ -55,9 +55,8 @@ function print {
     
   done
 }
-#!/bin/bash
-interval=${1-16}
 
+interval=${1-16}
 while true; do
   
   getfrompi
