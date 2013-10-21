@@ -1,6 +1,6 @@
 #!/bin/bash
 mkdir -v ~/Desktop/live/
-cd "$(pwd)/assets/03-timelaps/"
+cd "$(pwd)/assets/03-replay/"
 
 while true; do
 
