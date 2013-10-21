@@ -8,8 +8,8 @@ archives=$assets"02-archives"
 replay=$assets"03-replay"
 
 pathcam01=$assets"pi/pi-a"
-pathcam02=$assets"pi/pi-b"
-pathscan=$assets"pi/pi-c/"
+pathcam02=$assets"pi/pi-c"
+pathscan=$assets"pi/pi-b"
 
 texlinks="tex_template/links"
 
