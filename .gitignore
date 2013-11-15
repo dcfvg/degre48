@@ -16,3 +16,5 @@ assets
 
 *.aux
 *.log
+
+.DS_Store
