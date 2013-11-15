@@ -14,6 +14,7 @@ bgColor="#4792ef"
 bgFuzz=8
 
 new=false
+printcount=0
 
 function importLast (){
   dir=$1
@@ -35,7 +36,7 @@ function importLast (){
       -fuzz $bgFuzz% -transparent $bgColor \
       -modulate 100,0 \
     	$texlinks"/$dirsource.png"
-      
+      new=true
       
     elif [[ "$model" == *I9100* ]]
     then 
@@ -45,7 +46,6 @@ function importLast (){
     fi
     
     mv $pic $archives"/$(basename $(dirname $pic))/$(basename $pic)"
-    new=true
     
   done 
 }
@@ -59,6 +59,7 @@ function compilePDF (){
     pdflatex tex_template/template_float_img.tex >/dev/null
     convert -format jpg -resize 1280x720 template_float_img.pdf "$replay/$now.jpg"
     mv template_float_img.pdf "$printbox/$now.pdf"
+    let ++printcount
   fi
 }
 function print {
@@ -77,7 +78,7 @@ function print {
     
     mv $step $archivePath # copy in outbox (archives)
     lpr -P $printer -o media=A3 -o ColorModel=KGray -o fit-to-page $archivePath
-    printf "\t~ print \t $stepname \n\t_\t \t $(date +"%H.%M.%S")\n\n"
+    printf "\t~ print \t $printcount \t\t $stepname \n\t_\t \t $(date +"%H.%M.%S")\n\n"
   done
 }
 
@@ -85,15 +86,18 @@ interval=${1-5  }
 
 while true; do
   
-  importLast $import/phone
+
   importLast $import/table
-  
+  if $new; 
+  then
+    importLast $import/phone
+  fi
+    
   compilePDF
   print $printbox $archives"/printedpdf/"
   
   new=false
   
-  printf "_"
   for (( i=$interval; i>0; i--)); do
     sleep 1 &
     printf "next try in $i s \r"
