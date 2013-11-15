@@ -1,6 +1,6 @@
 # remote 48 (météo version)
-
-giant scan and blue screen
+giant scanner and blue screen
+( D48 15/11/13 )
 
 ### dependencies
 
