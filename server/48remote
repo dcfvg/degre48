@@ -16,12 +16,13 @@ bgFuzz=8
 function importLast (){
   dir=$1
   rotate=0
-  
   for pic in `find $dir -iname "*.jpg" -type f -print -quit`
   do    
   
     model=$(identify -format %[exif:Model] $pic)
-    echo "* new picture from $model: $pic*"
+    filetimehuman=$(perl -MPOSIX -le 'print strftime "%H.%M.%S",localtime ((stat $ARGV[0])[9])' $pic)
+    
+    printf "\t* new picture \t $filetimehuman \t $model \t $(basename $pic) \n"
     
     dirsource=$(basename $(dirname $pic))
     
@@ -48,7 +49,7 @@ function compilePDF (){
   
   pdflatex tex_template/template_float_img.tex >/dev/null
   convert -format jpg -resize 1280x720 template_float_img.pdf "$replay/$now.jpg"
-  mv -v template_float_img.pdf "$printbox/$now.pdf"
+  mv template_float_img.pdf "$printbox/$now.pdf"
 }
 function print {
   
@@ -57,16 +58,16 @@ function print {
   
   printer=C224e_Labos                    # labos
 
-  detox -vr $inbox
+  #detox -r $inbox
   
   for step in `find $inbox -iname "*.pdf" -type f`
   do
     stepname=$(basename $step)
     archivePath=$outbox$stepname
     
-    mv -v $step $archivePath # copy in outbox (archives)
+    mv $step $archivePath # copy in outbox (archives)
     lpr -P $printer -o media=A3 -o ColorModel=KGray -o fit-to-page $archivePath
-    
+    printf "print \t* $stepname \n"
   done
 }
 
@@ -74,15 +75,17 @@ interval=${1-16}
 
 while true; do
   
+  printf "import"
   importLast $import/phone
   importLast $import/table
   
   compilePDF
   print $printbox $archives"/printedpdf/"
   
+  echo "_"
   for (( i=$interval; i>0; i--)); do
     sleep 1 &
-    printf "next print in $i s \r"
+    printf "next scan in $i s \r"
     wait    
     printf "                   \r"
   done
