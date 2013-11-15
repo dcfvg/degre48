@@ -1,6 +1,6 @@
-# remote 48
+# remote 48 (météo version)
 
-How to see artists performance and making images at the same time
+giant scan and blue screen
 
 ### dependencies
 
