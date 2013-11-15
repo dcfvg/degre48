@@ -13,6 +13,8 @@ texlinks="tex_template/links"
 bgColor="#4792ef"
 bgFuzz=8
 
+new=false
+
 function importLast (){
   dir=$1
   rotate=0
@@ -34,6 +36,7 @@ function importLast (){
       -modulate 100,0 \
     	$texlinks"/$dirsource.png"
       
+      
     elif [[ "$model" == *I9100* ]]
     then 
       convert $pic \
@@ -42,14 +45,21 @@ function importLast (){
     fi
     
     mv $pic $archives"/$(basename $(dirname $pic))/$(basename $pic)"
+    new=true
+    
   done 
 }
 function compilePDF (){
   now=$(date +"%y.%m.%d-%H.%M.%S")
   
-  pdflatex tex_template/template_float_img.tex >/dev/null
-  convert -format jpg -resize 1280x720 template_float_img.pdf "$replay/$now.jpg"
-  mv template_float_img.pdf "$printbox/$now.pdf"
+  if $new; 
+  then
+    printf "\t> generate PDF \n"
+  
+    pdflatex tex_template/template_float_img.tex >/dev/null
+    convert -format jpg -resize 1280x720 template_float_img.pdf "$replay/$now.jpg"
+    mv template_float_img.pdf "$printbox/$now.pdf"
+  fi
 }
 function print {
   
@@ -67,25 +77,26 @@ function print {
     
     mv $step $archivePath # copy in outbox (archives)
     lpr -P $printer -o media=A3 -o ColorModel=KGray -o fit-to-page $archivePath
-    printf "print \t* $stepname \n"
+    printf "\t~ print \t $stepname \n\t_\t \t $(date +"%H.%M.%S")\n\n"
   done
 }
 
-interval=${1-16}
+interval=${1-5  }
 
 while true; do
   
-  printf "import"
   importLast $import/phone
   importLast $import/table
   
   compilePDF
   print $printbox $archives"/printedpdf/"
   
-  echo "_"
+  new=false
+  
+  printf "_"
   for (( i=$interval; i>0; i--)); do
     sleep 1 &
-    printf "next scan in $i s \r"
+    printf "next try in $i s \r"
     wait    
     printf "                   \r"
   done
