@@ -18,3 +18,8 @@ assets
 *.log
 
 .DS_Store
+*.pub
+
+server/iphone
+
+*.db
