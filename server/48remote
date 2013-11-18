@@ -10,8 +10,8 @@ replay=$assets"03-replay"
 
 texlinks="tex_template/links"
 
-bgColor="#4792ef"
-bgFuzz=8
+bgColor="#58bfff"
+bgFuzz=20
 
 new=false
 printcount=0
@@ -32,7 +32,8 @@ function importLast (){
     if [[ "$model" == *EOS* ]] 
     then
       convert $pic \
-      -format png -auto-orient -rotate 90 \
+      -format png \
+      -rotate 90 \
       -fuzz $bgFuzz% -transparent $bgColor \
       -modulate 100,0 \
     	$texlinks"/$dirsource.png"
@@ -78,6 +79,7 @@ function print {
     
     mv $step $archivePath # copy in outbox (archives)
     lpr -P $printer -o media=A3 -o ColorModel=KGray -o fit-to-page $archivePath
+    #open $archivePath
     printf "\t~ print \t $printcount \t\t $stepname \n\t_\t \t $(date +"%H.%M.%S")\n\n"
   done
 }
