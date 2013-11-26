@@ -8,97 +8,68 @@ printbox=$assets"01-printbox"
 archives=$assets"02-archives"
 replay=$assets"03-replay"
 
-texlinks="tex_template/links"
-
 bgColor="#58bfff"
 bgFuzz=20
 
 new=false
 printcount=0
 
-function importLast (){
-  dir=$1
-  rotate=0
-  for pic in `find $dir -iname "*.jpg" -type f -print -quit`
-  do    
-  
-    model=$(identify -format %[exif:Model] $pic)
-    filetimehuman=$(perl -MPOSIX -le 'print strftime "%H.%M.%S",localtime ((stat $ARGV[0])[9])' $pic)
-    
-    printf "\t* new picture \t $filetimehuman \t $model \t $(basename $pic) \n"
-    
-    dirsource=$(basename $(dirname $pic))
-    
-    if [[ "$model" == *EOS* ]] 
-    then
-      convert $pic \
-      -format png \
-      -rotate 90 \
-      -fuzz $bgFuzz% -transparent $bgColor \
-      -modulate 100,0 \
-    	$texlinks"/$dirsource.png"
-      new=true
-      
-    elif [[ "$model" == *I9100* ]]
-    then 
-      convert $pic \
-      -format jpeg -modulate 100,0 -auto-orient \
-      $texlinks"/$dirsource.jpeg"
-    fi
-    
-    mv $pic $archives"/$(basename $(dirname $pic))/$(basename $pic)"
-    
-  done 
-}
 function compilePDF (){
+  
   now=$(date +"%y.%m.%d-%H.%M.%S")
+  phantomjs poster/get.js >/dev/null
+  convert assets/step.png -modulate 100,0 assets/01-printbox/$now.pdf
   
-  if $new; 
-  then
-    printf "\t> generate PDF \n"
+}
+function preprocessimages (){
   
-    pdflatex tex_template/template_float_img.tex >/dev/null
-    convert -format jpg -resize 1280x720 template_float_img.pdf "$replay/$now.jpg"
-    mv template_float_img.pdf "$printbox/$now.pdf"
-    let ++printcount
-  fi
+  inbox=$#
+  
+  for pic in `find $1 -iname "*.jpg" -type f`
+  do
+    
+    pic_name=$(basename $pic)
+    
+    
+    convert $pic -auto-orient -resize 800x800 -type GrayScaleMatte $import/$pic_name
+    mv $pic $archives/$pic_name
+  done
 }
 function print {
+  
+  clear
   
   inbox=$1
   outbox=$2
   
   printer=C224e_Labos                    # labos
 
-  #detox -r $inbox
+  # detox -r $inbox
   
   for step in `find $inbox -iname "*.pdf" -type f`
   do
+    ((printcount++))
+    
     stepname=$(basename $step)
     archivePath=$outbox$stepname
     
     mv $step $archivePath # copy in outbox (archives)
     lpr -P $printer -o media=A3 -o ColorModel=KGray -o fit-to-page $archivePath
-    #open $archivePath
+
     printf "\t~ print \t $printcount \t\t $stepname \n\t_\t \t $(date +"%H.%M.%S")\n\n"
+    
   done
 }
 
 interval=${1-5  }
 
 while true; do
-  
-
-  importLast $import/table
-  if $new; 
-  then
-    importLast $import/phone
-  fi
     
   compilePDF
   print $printbox $archives"/printedpdf/"
+  preprocessimages $import/pictures/
   
-  new=false
+ # new=false
   
   for (( i=$interval; i>0; i--)); do
     sleep 1 &
