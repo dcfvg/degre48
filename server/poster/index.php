@@ -114,7 +114,7 @@ if($nb_f > 16) $p = 100/6;
 
     <script>
       $('.bigtext').bigtext({
-          maxfontsize: 250 // default is 48 (in px)
+          maxfontsize: 90 // default is 48 (in px)
       });
     </script>
   </body>
