@@ -1,6 +1,6 @@
-# remote 48 (météo version)
-giant scanner and blue screen
-( D48 15/11/13 )
+# remote 48 ( auto-contact )
+
+Génère automatiquement une planche contact. Ce dispositif est pensé pour être manipulé par une seule personne.
 
 ### dependencies
 
@@ -10,3 +10,5 @@ giant scanner and blue screen
 - sane 				( scanner )
 - fswebcam    ( webcam snapshot)
 - ffmpeg      ( replay )
+- phantomjs   ( screenshot )
+- nodejs
