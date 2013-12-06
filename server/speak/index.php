@@ -27,6 +27,5 @@ if(isset($_POST['quote']) || $_POST['quote'] !="" ) {
       <p><input type="submit" value="submit"></p>
     </form>
     <?php echo $message?>
-
   </body>
 </html>

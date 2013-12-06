@@ -4,6 +4,7 @@ date_default_timezone_set('Europe/Paris');
 
 $m_path = "../assets/00-import/*.*";
 $files = glob($m_path);
+$files = array_slice(array_reverse($files),0,36);
 
 function insec($t){
   $t = str_replace(" !", "&nbsp;!", $t);
@@ -43,9 +44,9 @@ function cutwords2($text){
   
   $nb_lines = 8;
   if($nb_w < 20 ) $nb_lines = 7;
-  if($nb_w < 15 ) $nb_lines = 5;
-  if($nb_w < 12 ) $nb_lines = 4;
-  if($nb_w < 10 ) $nb_lines = 3;
+  if($nb_w < 13 ) $nb_lines = 5;
+  if($nb_w < 10 ) $nb_lines = 4;
+  if($nb_w < 8 ) $nb_lines = 3;
   if($nb_w < 5 ) $nb_lines = 2;
   
   
@@ -60,7 +61,8 @@ function cutwords2($text){
   return $p;
 }
 
-foreach (array_reverse($files) as $id => $file) {
+
+foreach ($files as $id => $file) {
   
   $f = pathinfo($file);
 
@@ -84,6 +86,7 @@ $nb_f = count($files);
 
 $p = 100/5;
 
+if($nb_f > 0) $p = 100;
 if($nb_f > 1) $p = 100/2;
 if($nb_f > 4) $p = 100/4;
 if($nb_f > 16) $p = 100/6;
@@ -92,30 +95,19 @@ if($nb_f > 16) $p = 100/6;
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>degré48</title>
     <link rel="stylesheet" href="css/screen.css">
-    
     <style type="text/css" media="screen">
-      table {
+      body ol li {
         width:<?php echo $p ?>%;
         height:<?php echo $p ?>%;
       }
     </style>
   </head>
   <body>
-    <ol>
-      <?php echo $list ?>
-    </ol>
-    
-
-    
+    <ol><?php echo $list ?></ol>
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/BigText/bigtext.js"></script>
-
-    <script>
-      $('.bigtext').bigtext({
-          maxfontsize: 90 // default is 48 (in px)
-      });
-    </script>
+    <script>$('.bigtext').bigtext({ maxfontsize: 200 });</script>
   </body>
 </html>
