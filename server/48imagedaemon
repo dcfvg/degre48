@@ -51,12 +51,13 @@ function importFormShareFolder {
   source=$1
   target=$2
   
-  filecount=$(find $source -type f -exec printf '.' \; | wc -c  | tr -d ' ')
+  filecount=$(find $source -type f ! -iname "*sync*" -exec printf '.' \; | wc -c  | tr -d ' ')
   
   if [[ $filecount > 0 ]]
   then
     detox -rv $source
-    mv $source/* $target
+    mv $source/*.jpg $target
+    mv $source/*.png $target
   fi
 }
 
@@ -69,16 +70,17 @@ replay=$assets"03-replay"
 
 # params
 # set -x
-interval=${1-20}
+interval=${1-1}
 bgColor="#58bfff"
 bgFuzz=20
 printcount=0
 
 while true; do
-  
   clear
-  compilePDF
-  print $printbox $archives"/printedpdf/"
+  importFormShareFolder /Users/benoit/Desktop/phone $import/pictures/
+  importFormShareFolder /Volumes/capture-MacBook-Pro-de-Brice-2 $import/pictures/
+  
+  preprocessimages $import/pictures/
   
   for (( i=$interval; i>0; i--)); do
     sleep 1 &
