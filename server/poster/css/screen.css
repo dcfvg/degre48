@@ -7,8 +7,9 @@ body {
   background-color: black;
   width: 100%;
   height: 100%;
+  width: 2970px;
+  height: 4200px;
   font-size: 12px;
-  overflow: hidden;
 }
 body ol {
   width: 100%;
