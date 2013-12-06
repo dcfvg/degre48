@@ -5,6 +5,8 @@ function compilePDF (){
   now=$(date +"%y.%m.%d-%H.%M.%S")
   phantomjs poster/get.js >/dev/null
   convert assets/step.png -modulate 100,0 assets/01-printbox/$now.pdf  
+  
+  # open assets/step.png
 }
 function preprocessimages (){
   
