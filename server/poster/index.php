@@ -11,8 +11,7 @@ function insec($t){
   $t = str_replace(" ?", "&nbsp;?", $t);
   $t = str_replace(" ?", "&nbsp;?", $t);
   
-  return $t;
-  
+  return $t;  
 }
 function cutwords($text){
   
@@ -60,8 +59,6 @@ function cutwords2($text){
   }
   return $p;
 }
-
-
 foreach ($files as $id => $file) {
   
   $f = pathinfo($file);
@@ -83,7 +80,6 @@ foreach ($files as $id => $file) {
 }
 
 $nb_f = count($files);
-
 $p = 100/5;
 
 if($nb_f > 0) $p = 100;
@@ -91,17 +87,32 @@ if($nb_f > 1) $p = 100/2;
 if($nb_f > 4) $p = 100/4;
 if($nb_f > 16) $p = 100/6;
 
+if(isset($_GET['refresh'])){
+  $r = '<META HTTP-EQUIV="Refresh" CONTENT="'.$_GET['refresh'].'">';
+  $s = '
+  body {
+    width:100%;
+    height:100%;
+    font-size:8px;
+  }
+  sup {
+    font-size:10px;
+  }
+  '; 
+}
 ?>
 <html>
   <head>
     <meta charset="utf-8">
     <title>degré48</title>
     <link rel="stylesheet" href="css/screen.css">
+    <?php echo $r ?>
     <style type="text/css" media="screen">
       body ol li {
         width:<?php echo $p ?>%;
         height:<?php echo $p ?>%;
       }
+      <?php echo $s ?>
     </style>
   </head>
   <body>
