@@ -6,7 +6,7 @@ var page = new WebPage(),
 // address = "http://dev.d48/poster/";
 
 address = "http://127.0.0.1/poster/";
-width = 2970; height = 4150; // 4200
+width = 2970; height = 4200; // 4200
 output = "assets/step.png";
 
 
