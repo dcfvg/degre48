@@ -29,9 +29,10 @@ body ol li p {
 }
 sup {
   background-color: black;
-  color: #666666;
-  font-size: 8px;
+  color: #888888;
+  font-size: 18px;
   font-family: Monaco;
+  height: 0px;
   position: relative;
   top: 100%;
   display: block;
