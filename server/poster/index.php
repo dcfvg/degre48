@@ -4,7 +4,7 @@ date_default_timezone_set('Europe/Paris');
 
 $m_path = "../assets/00-import/*.*";
 $files = glob($m_path);
-$files = array_slice(array_reverse($files),0,36);
+$files = array_slice(array_reverse($files),0,42);
 
 function insec($t){
   $t = str_replace(" !", "&nbsp;!", $t);
@@ -48,7 +48,6 @@ function cutwords2($text){
   if($nb_w < 8 ) $nb_lines = 3;
   if($nb_w < 5 ) $nb_lines = 2;
   
-  
   $charPerLine = ceil($nb_chars/$nb_lines);
   
   $text = wordwrap(insec($text), $charPerLine, "<!>");
@@ -85,7 +84,15 @@ $p = 100/5;
 if($nb_f > 0) $p = 100;
 if($nb_f > 1) $p = 100/2;
 if($nb_f > 4) $p = 100/4;
-if($nb_f > 16) $p = 100/6;
+
+$l = $c = $p;
+
+if($nb_f > 16) {
+  $l = 100/6;
+  $c = 100/7;
+}
+
+$maxFontsize = 120;
 
 if(isset($_GET['refresh'])){
   $r = '<META HTTP-EQUIV="Refresh" CONTENT="'.$_GET['refresh'].'">';
@@ -97,8 +104,9 @@ if(isset($_GET['refresh'])){
   }
   sup {
     font-size:10px;
-  }
-  '; 
+  }';
+  $mode = "refresh";
+  $maxFontsize = 50;
 }
 ?>
 <html>
@@ -109,16 +117,16 @@ if(isset($_GET['refresh'])){
     <?php echo $r ?>
     <style type="text/css" media="screen">
       body ol li {
-        width:<?php echo $p ?>%;
-        height:<?php echo $p ?>%;
+        width:<?php echo $l ?>%;
+        height:<?php echo $c ?>%;
       }
       <?php echo $s ?>
     </style>
   </head>
-  <body>
+  <body class="<?php echo $mode ?>">
     <ol><?php echo $list ?></ol>
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/BigText/bigtext.js"></script>
-    <script>$('.bigtext').bigtext({ maxfontsize: 200 });</script>
+    <script>$('.bigtext').bigtext({ maxfontsize: <?php echo $maxFontsize ?> });</script>
   </body>
 </html>
