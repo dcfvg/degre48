@@ -15,23 +15,23 @@ new=false
 printcount=0
 
 function compilePDF (){
-  
+
   now=$(date +"%y.%m.%d-%H.%M.%S")
   phantomjs poster/get.js >/dev/null
-  convert assets/step.png -modulate 100,0 assets/01-printbox/$now.pdf
-  
+  convert assets/step.png -modulate 100,0 assets/01-printbox/$now.pdf  
 }
 function preprocessimages (){
   
-  inbox=$#
+  inbox=$1
+  detox -rv $inbox
   
-  for pic in `find $1 -iname "*.jpg" -type f`
+  for pic in `find $inbox -iname "*.*" -type f`
   do
-    
     pic_name=$(basename $pic)
     
+    now=$(date +"%Y%m%d_%H%M%S")
     
-    convert $pic -auto-orient -resize 800x800 -type GrayScaleMatte $import/$pic_name
+    convert $pic -format jpg -auto-orient -resize 800x800 -type GrayScaleMatte $import/$now.jpg
     mv $pic $archives/$pic_name
   done
 }
@@ -43,8 +43,7 @@ function print {
   outbox=$2
   
   printer=C224e_Labos                    # labos
-
-  # detox -r $inbox
+  detox -rv $inbox
   
   for step in `find $inbox -iname "*.pdf" -type f`
   do
@@ -60,16 +59,27 @@ function print {
     
   done
 }
-
-interval=${1-5  }
+function importFormShareFolder {
+  source=$1
+  target=$2
+  
+  filecount=$(find $source -type f -exec printf '.' \; | wc -c  | tr -d ' ')
+  
+  if [[ $filecount > 0 ]]
+  then
+    detox -rv $source
+    mv $source/* $target
+  fi
+}
+interval=${1-5}
 
 while true; do
-    
+  
   compilePDF
   print $printbox $archives"/printedpdf/"
-  preprocessimages $import/pictures/
   
- # new=false
+  importFormShareFolder /Users/benoit/Desktop/test $import/pictures/
+  preprocessimages $import/pictures/
   
   for (( i=$interval; i>0; i--)); do
     sleep 1 &
