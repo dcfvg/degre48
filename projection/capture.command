@@ -3,7 +3,7 @@
 
 computer=$(scutil --get LocalHostName)  # OSX Only
 inbox=~/Desktop/capture-$computer
-interval=${1-4}
+interval=${1-20}
 
 mkdir -v $inbox
 here="`dirname \"$0\"`"
