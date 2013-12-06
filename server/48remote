@@ -1,18 +1,4 @@
 #!/bin/bash
-# set -x
-
-assets="assets/"
-
-import=$assets"00-import"
-printbox=$assets"01-printbox"
-archives=$assets"02-archives"
-replay=$assets"03-replay"
-
-bgColor="#58bfff"
-bgFuzz=20
-
-new=false
-printcount=0
 
 function compilePDF (){
 
@@ -71,7 +57,20 @@ function importFormShareFolder {
     mv $source/* $target
   fi
 }
+
+# path
+assets="assets/"
+import=$assets"00-import"
+printbox=$assets"01-printbox"
+archives=$assets"02-archives"
+replay=$assets"03-replay"
+
+# params
+# set -x
 interval=${1-5}
+bgColor="#58bfff"
+bgFuzz=20
+printcount=0
 
 while true; do
   
