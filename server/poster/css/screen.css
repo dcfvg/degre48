@@ -1,3 +1,4 @@
+@import "../font/stylesheet.css";
 * {
   margin: 0;
   padding: 0;
@@ -11,6 +12,14 @@ body {
   height: 4185px;
   font-size: 12px;
   overflow: hidden;
+}
+body.refresh {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
 }
 body ol {
   width: 100%;
@@ -26,20 +35,20 @@ body ol li {
   background-position: center;
 }
 body ol li p {
-  margin: 8%;
+  padding: 10%;
 }
 sup {
   background-color: black;
-  color: #888888;
-  font-size: 18px;
+  color: #fff;
+  font-size: 20px;
   font-family: Monaco;
   height: 0px;
   position: relative;
-  top: 100%;
+  top: 98%;
   display: block;
 }
 .bigtext {
-  font-family: "48GROUP";
+  font-family: '48groupregular';
   text-transform: uppercase;
   color: white;
 }
