@@ -10,6 +10,6 @@ Leur action sont retranscrit sur un écran à l'extérieur en temps réel.Une ve
 - 23/05/13
 
 # dépendances
-- gdocs /!\
-- sikuli
-- imagemagick
+- gdocs /!\		( document partagé ) 
+- sikuli			( enregistrement de la version pdf ) 
+- imagemagick ( ajout de l'heure, conversions )
