@@ -1,12 +1,11 @@
-# remote 48 ( auto-contact )
 
-Génère automatiquement une planche contact. Ce dispositif est pensé pour être manipulé par une seule personne.
+# Everybody
+- Chacun peut proposer sa source de média.
 
-Un mouchard est placé sur l'ordinateur qui assure la projection.
+- Les médias ( .md ou jpg ) seront centralisé et composé avec une grille faisant varié les tailles.
 
-Dans la salle, depuis leur téléphone portable 4 personnes envoient des réactions. Une 5 personne à l'aide d'une téléphone portable peu compléter les images de la projection par des photo prises dans la salle. 
-
-Les images et les réactions sont disposés sous forme de grille suivant une logique FIFO. Avec une 42 items, chaque planche représente ±6 min.
+- La boite de dépôt est vidée à chacune des impressions
+- Le poster est donc le reflet de l'état de la boîte de dépôt ( cela peut aller de 1 à 1000 éléments )
 
 ## dépendances
 
@@ -18,3 +17,11 @@ server
 web app
 - bootstrap 
 - jquery
+
+## gird system
+
+http://vnjs.net/www/project/freewall
+http://packery.metafizzy.co
+http://suprb.com/apps/nested
+http://hashgrid.com
+http://slimerjs.org
