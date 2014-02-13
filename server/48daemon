@@ -1,4 +1,5 @@
 #!/bin/bash
+# set -x
 
 function compilePDF (){
 
@@ -27,18 +28,18 @@ function print {
   
   clear
   
-  inbox=$1
-  outbox=$2
+  printinbox=$1
+  printoutbox=$2
   
   printer=C224e_Labos                    # labos
-  detox -rv $inbox
+  detox -rv $printinbox
   
-  for step in `find $inbox -iname "*.pdf" -type f`
+  for step in `find $printinbox -iname "*.pdf" -type f`
   do
     ((printcount++))
     
     stepname=$(basename $step)
-    archivePath=$outbox$stepname
+    archivePath=$printoutbox$stepname
     
     mv $step $archivePath # copy in outbox (archives)
     lpr -P $printer -o media=A3 -o ColorModel=KGray -o fit-to-page $archivePath
@@ -69,23 +70,35 @@ archives=$assets"02-archives"
 replay=$assets"03-replay"
 
 # params
-# set -x
-interval=${1-1}
+interval=${1-20}
 bgColor="#58bfff"
 bgFuzz=20
 printcount=0
 
+inboxsources=( "/Users/benoit/Desktop/phone" "/Volumes/capture-MacBook-Pro-de-Brice-2" )
+
+# main loop
 while true; do
-  clear
-  importFormShareFolder /Users/benoit/Desktop/phone $import/pictures/
-  importFormShareFolder /Volumes/capture-MacBook-Pro-de-Brice-2 $import/pictures/
   
+  # get from sources
+  for inboxsource in "${inboxsources[@]}"; do
+    importFormShareFolder $inboxsource $import/pictures/
+  done
+  
+  # image processing
   preprocessimages $import/pictures/
   
+  # print
+  compilePDF
+  print $printbox $archives"/printedpdf/"
+  
+  # wait
   for (( i=$interval; i>0; i--)); do
     sleep 1 &
     printf "next try in $i s \r"
-    wait    
+    wait
     printf "                   \r"
   done
+  clear
+
 done
