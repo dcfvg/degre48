@@ -31,9 +31,10 @@ function init(){
   if(isset($_GET['refresh'])){
     $_META_REFRESH = '<META HTTP-EQUIV="Refresh" CONTENT="'.$_GET['refresh'].'">';
     $_BODY_CLASSES = "refresh";
-  }else{
-    $_BODY_CLASSES = "no-refresh";
   }
+  // else{
+  //   $_BODY_CLASSES = "no-refresh";
+  // }
     
   printHTML();
 }
@@ -74,7 +75,8 @@ function setupDomList($files){
 function setupLayout($nb_f){
   global $_SCRIPT, $_BODY_CLASSES; // $_META_REFRESH, $_STYLES, ,  
 
-  $_SCRIPT = "var settings = {nb_items:".$nb_f.", refresh:'".$_BODY_CLASSES."'}";
+  $refresh = isset($_GET['refresh']) ? 1 : 0;
+  $_SCRIPT = 'var settings = {nb_items:'.$nb_f.', refresh:'.$refresh.'}';
   
 } 
 

@@ -5,6 +5,7 @@
   var _cell_w, _cell_h, _gouttiere=0;
 
   function init(){
+    console.log('init | settings', settings);
     _$grid_container = $('<div id="grid-container">').appendTo('body');
 
     setupLayout();
@@ -14,7 +15,7 @@
     $('.bigtext').bigtext({ maxfontsize: 50 });
 
     setupGrid();
-    if(settings.refresh == 'no-refresh')
+    if(!settings.refresh)
       cleanSRC();
   };
 
@@ -108,7 +109,11 @@
     })
     .always(function() {
       console.log("complete");
-      window.callPhantom();
+      try{
+        window.callPhantom(); 
+      }catch(error){
+        console.log('no phantom');
+      }
     });
     
   };
