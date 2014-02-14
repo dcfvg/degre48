@@ -87,20 +87,18 @@ import=$assets"00-import"
 printbox=$assets"01-printbox"
 archives=$assets"02-archives"
 replay=$assets"03-replay"
+inboxsources=( "$import/test_pic" "$import/test_sca" )
 
 # params
 interval=${1-20}
 bgColor="#58bfff"
 bgFuzz=20
 printcount=0
-
 mediatype=(jpg png md)
-inboxsources=( "$import/test_pic" "$import/test_sca" )
 
 # main loop
-while true; do
+while false; do
   clear
-  
   echo "getsources ..."
   
   # get from sources
