@@ -48,17 +48,38 @@ function print {
   done
 }
 function importFormShareFolder {
+  
   source=$1
   target=$2
+  mediatype=$3
   
-  filecount=$(find $source -type f ! -iname "*sync*" -exec printf '.' \; | wc -c  | tr -d ' ')
+  # count files
+  filecount=$(find $source -type f ! -iname "*sync*" ! -iname "*.DS_Store" -exec printf '.' \; | wc -c  | tr -d ' ')
+  sourcename=$(basename $source)
+  sourcetype=${sourcename: -3 :4}
+
+  # pre-processing
   
   if [[ $filecount > 0 ]]
   then
     detox -rv $source
-    mv $source/*.jpg $target
-    mv $source/*.png $target
+    
+    for type in "${mediatype[@]}"; do
+      case "$sourcetype" in
+        pic) 
+          sourcetypename="picture"
+        ;;
+        sca) 
+          sourcetypename="scanner"
+        ;;
+        * ) 
+          sourcetypename="Not processed"
+          cp $source/*.$type $target > /dev/null 2>&1
+        ;;
+      esac
+    done
   fi
+  printf "$sourcename \t $filecount file \t type : $sourcetypename ($sourcetype)\n\n"
 }
 
 # path
