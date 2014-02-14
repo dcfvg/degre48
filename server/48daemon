@@ -100,10 +100,13 @@ inboxsources=( "$import/test_pic" "$import/test_sca" )
 
 # main loop
 while true; do
+  clear
+  
+  echo "getsources ..."
   
   # get from sources
   for inboxsource in "${inboxsources[@]}"; do
-    importFormShareFolder $inboxsource $import/pictures/
+    importFormShareFolder $inboxsource $import/pictures/ $mediatype
   done
   
   # image processing
@@ -120,6 +123,4 @@ while true; do
     wait
     printf "                   \r"
   done
-  clear
-
 done
