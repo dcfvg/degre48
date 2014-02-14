@@ -4,8 +4,12 @@
   padding: 0;
 }
 body {
-  width: 297mm;
-  height: 420mm;
+  /*  
+  width:2970px;
+  height:4185px;*/
+  /*  width:250mm;
+  height:400mm; */
+  background: #000;
   font-size: 12px;
   overflow: hidden;
 }
@@ -33,15 +37,17 @@ body #grid-container .grid-item.outside {
   display: none;
 }
 sup {
-  color: #000;
-  font-size: 20px;
+  color: #fff;
+  font-size: 9px;
   font-family: Monaco;
-  height: 0px;
-  position: relative;
-  top: 98%;
+  position: absolute;
+  bottom: 0;
   display: block;
+  width: 100%;
+  z-index: 100;
 }
 .bigtext {
   font-family: '48groupregular';
   text-transform: uppercase;
+  color: #fff;
 }

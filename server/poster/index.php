@@ -65,7 +65,7 @@ function setupDomList($files){
         break;
     }
 
-    $item = '<li class="'.$item_class.'" file="'.$file.'">'.$cont.'<sup>'.$date.'<sup></li>';
+    $item = '<li class="'.$item_class.'" file="'.$file.'">'.$cont.'<sup>'.$date.'</sup></li>';
     $list .= $item;
   }
 
