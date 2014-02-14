@@ -25,8 +25,6 @@ function preprocessimages (){
 }
 function print {
   
-  clear
-  
   printinbox=$1
   printoutbox=$2
   
