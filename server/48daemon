@@ -4,10 +4,9 @@
 function compilePDF (){
 
   now=$(date +"%y.%m.%d-%H.%M.%S")
-  phantomjs poster/get.js >/dev/null
-  convert assets/step.png -modulate 100,0 assets/01-printbox/$now.pdf  
+  phantomjs rasterize.js "http://127.0.0.1/poster/" "$printbox/$now.pdf" 1 A3
   
-  # open assets/step.png
+  #convert "$assets/tmp.pdf" -modulate 100,0 $printbox/$now.pdf
 }
 function preprocessimages (){
   
