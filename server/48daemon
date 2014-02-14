@@ -95,7 +95,8 @@ bgColor="#58bfff"
 bgFuzz=20
 printcount=0
 
-inboxsources=( "/Users/benoit/Desktop/phone" "/Volumes/capture-MacBook-Pro-de-Brice-2" )
+mediatype=(jpg png md)
+inboxsources=( "$import/test_pic" "$import/test_sca" )
 
 # main loop
 while true; do
