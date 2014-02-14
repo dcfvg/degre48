@@ -28,7 +28,7 @@ function init(){
   $nb_f = count($files);
   setupLayout($nb_f);
 
-  if(isset($_GET['refresh'])){
+  if(isset($_GET['refresh']) && is_numeric($_GET['refresh'])){
     $_META_REFRESH = '<META HTTP-EQUIV="Refresh" CONTENT="'.$_GET['refresh'].'">';
     $_BODY_CLASSES = "refresh";
   }
