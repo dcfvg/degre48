@@ -6,6 +6,8 @@ function compilePDF (){
 
   now=$(date +"%y.%m.%d-%H.%M.%S")
   phantomjs rasterize.js $1 "$printbox/$now.pdf" A3 1 &
+  echo "get $1"
+  phantomjs rasterize.js $1 "$printbox/$now.pdf" A3 1
   
   #convert "$assets/tmp.pdf" -modulate 100,0 $printbox/$now.pdf
 }
