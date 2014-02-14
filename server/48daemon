@@ -110,7 +110,7 @@ while true; do
   preprocessimages $import/pictures/
   
   # print
-  compilePDF
+  compilePDF "http://192.168.1.34/poster/testcallback.html" &
   print $printbox $archives"/printedpdf/"
   say "print !"
   
