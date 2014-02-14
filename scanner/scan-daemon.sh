@@ -28,8 +28,8 @@ function scan {
   now=$(date +"%y.%m.%d-%H.%M.%S")
   
   echo "scan A3 Epson ES-7000H      "
-	scanimage --format tiff --resolution $dpi --mode Lineart -d $scanA3 > $assets/A3.tiff
-  convert -format jpg $assets/A3.tiff $assets/$now.jpg
+	scanimage --format tiff --resolution $dpi --mode Lineart -d $scanA3 > A3.tiff
+  convert -format jpg A3.tiff $assets/$now.jpg
   
   # echo "scan A4                     "
   # scanimage --format tiff --mode Color --resolution $dpi -d $scanA4 -p > $assets/A4.tiff
