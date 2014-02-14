@@ -25,10 +25,11 @@ function scan {
   # 1. scanimage -L
   # 2. copy the adress ( ex. epson2:libusb:001:006 ) to the -d param
   # 
+  now=$(date +"%y.%m.%d-%H.%M.%S")
   
   echo "scan A3 Epson ES-7000H      "
 	scanimage --format tiff --resolution $dpi --mode Lineart -d $scanA3 > $assets/A3.tiff
-  #convert -monitor -format png $assets/A3.jpeg $assets/A3.jpeg
+  convert -format jpg $assets/A3.tiff $assets/$now.jpg
   
   # echo "scan A4                     "
   # scanimage --format tiff --mode Color --resolution $dpi -d $scanA4 -p > $assets/A4.tiff
@@ -36,7 +37,7 @@ function scan {
   
 }
 
-while true; do 
+while true; do
   scan
   for (( i=$freq; i>0; i--)); do
     sleep 1 &
