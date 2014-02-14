@@ -33,7 +33,7 @@ body #grid-container .grid-item.outside {
   display: none;
 }
 sup {
-  color: #fff;
+  color: #000;
   font-size: 20px;
   font-family: Monaco;
   height: 0px;
