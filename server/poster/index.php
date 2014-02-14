@@ -20,7 +20,7 @@ function init(){
 
   $m_path = "../assets/00-import/*.*";
   // $item_limits = rand(1, 45);
-  $item_limits = 100; 
+  $item_limits = 10; 
   $files = glob($m_path);
   $files = array_slice(array_reverse($files),0,$item_limits);
   $_DOM_LI = setupDomList($files);
