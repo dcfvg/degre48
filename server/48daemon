@@ -97,7 +97,7 @@ printcount=0
 mediatype=(jpg png md)
 
 # main loop
-while false; do
+while true; do
   clear
   echo "getsources ..."
   
