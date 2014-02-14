@@ -114,7 +114,11 @@ while true; do
   preprocessimages $import/pictures/
   
   # print
+  compilePDF "http://localhost/poster/?refresh=truc"
+  compilePDF "http://localhost/poster/?refresh=truc"
+  compilePDF "http://localhost/poster/?refresh=truc"
   compilePDF "http://localhost/poster/"
+  
   print $printbox $archives"/printedpdf/"
   say "print !"
   
