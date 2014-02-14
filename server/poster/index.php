@@ -16,10 +16,11 @@ $_DOM_LI = "";
  * INIT
  */
 function init(){
-  global $_DOM_LI;
+  global $_DOM_LI, $_META_REFRESH, $_BODY_CLASSES;
 
   $m_path = "../assets/00-import/*.*";
-  $item_limits = 30;
+  // $item_limits = rand(1, 45);
+  $item_limits = 100; 
   $files = glob($m_path);
   $files = array_slice(array_reverse($files),0,$item_limits);
   $_DOM_LI = setupDomList($files);
@@ -27,6 +28,13 @@ function init(){
   $nb_f = count($files);
   setupLayout($nb_f);
 
+  if(isset($_GET['refresh'])){
+    $_META_REFRESH = '<META HTTP-EQUIV="Refresh" CONTENT="'.$_GET['refresh'].'">';
+    $_BODY_CLASSES = "refresh";
+  }else{
+    $_BODY_CLASSES = "no-refresh";
+  }
+    
   printHTML();
 }
 
@@ -43,62 +51,32 @@ function setupDomList($files){
     $timestamp = $datetime->getTimestamp();
     $date = "48°54' :: ".date('H:i:s',$timestamp);
     
+
+    $item_class = 'grid-item'; 
     switch (strtolower($f['extension'])) {
       case 'jpg':
-        $list .= '<li class="image" style="background-image:url('.$file.')"> <sup>'.$date.'<sup></li>';
+        $cont = '<img src="'.$file.'" />';
+        $item_class .= ' image';
         break;
       case 'md':
-        $list .= '<li class="md">
-            <sup>'.$date.'</sup><p class="bigtext">'.cutwords2(file_get_contents($file)).'</p>
-          </li>';
+        $cont = '<p class="bigtext">'.cutwords2(file_get_contents($file)).'</p>';
+        $item_class .= ' md';
         break;
     }
+
+    $item = '<li class="'.$item_class.'" file="'.$file.'">'.$cont.'<sup>'.$date.'<sup></li>';
+    $list .= $item;
   }
 
   return $list;
 }
 
 function setupLayout($nb_f){
-  global $_META_REFRESH, $_STYLES, $_BODY_CLASSES, $_SCRIPT; 
-  $p = 100/5;
+  global $_SCRIPT, $_BODY_CLASSES; // $_META_REFRESH, $_STYLES, ,  
 
-  if($nb_f > 0) $p = 100;
-  if($nb_f > 1) $p = 100/2;
-  if($nb_f > 4) $p = 100/4;
-
-  $l = $c = $p;
-
-  if($nb_f > 16) {
-    $l = 100/6;
-    $c = 100/7;
-  }
-
-  $maxFontsize = 120;
-
-  if(isset($_GET['refresh'])){
-    $_META_REFRESH = '<META HTTP-EQUIV="Refresh" CONTENT="'.$_GET['refresh'].'">';
-    $_STYLES = "
-      body {
-        width:100%;
-        height:100%;
-        font-size:8px;
-      }
-      sup {
-        font-size:10px;
-      }
-      body ol li {
-        width:$l%;
-        height:$c%;
-      }
-    ";
-    
-    $_BODY_CLASSES = "refresh";
-    $maxFontsize = 50;
-
-    $_SCRIPT = "$('.bigtext').bigtext({ maxfontsize: $maxFontsize });";
-  }  
+  $_SCRIPT = "var settings = {nb_items:".$nb_f.", refresh:'".$_BODY_CLASSES."'}";
+  
 } 
-
 
 /**
  * text
@@ -174,9 +152,10 @@ function printHTML(){
       <style type="text/css" media="screen">'. $_STYLES.'</style>
     </head>
     <body class="' . $_BODY_CLASSES .'">
-      <ul>'. $_DOM_LI .'</ul>
+      <ul id="item-list">'. $_DOM_LI .'</ul>
       <script src="js/jquery-1.10.2.min.js"></script>
       <script src="js/BigText/bigtext.js"></script>
+      <script src="js/script.js"></script>
       <script>'. $_SCRIPT .'</script>
     </body>
   </html>';
