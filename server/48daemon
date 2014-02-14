@@ -29,7 +29,7 @@ function print {
   printinbox=$1
   printoutbox=$2
   
-  printer=C224e_Labos                    # labos
+  printer=_192_168_1_35                    # labos
   detox -rv $printinbox
   
   for step in `find $printinbox -iname "*.pdf" -type f`
