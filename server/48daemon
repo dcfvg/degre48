@@ -53,7 +53,7 @@ function importFormShareFolder {
   mediatype=$3
   
   # count files
-  filecount=$(find $source -type f ! -iname "*sync*" ! -iname "*.DS_Store" -exec printf '.' \; | wc -c  | tr -d ' ')
+  filecount=$(find $source -type f ! -iname "*sync" ! -iname "*.DS_Store" -exec printf '.' \; | wc -c  | tr -d ' ')
   sourcename=$(basename $source)
   sourcetype=${sourcename: -3 :4}
 
