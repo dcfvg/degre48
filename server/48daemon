@@ -6,9 +6,8 @@ function compilePDF (){
 
   now=$(date +"%y.%m.%d-%H.%M.%S")
   echo "get $1"
-  phantomjs rasterize.js $1 "$printbox/$now.pdf" A3 1
-  
-  #convert "$assets/tmp.pdf" -modulate 100,0 $printbox/$now.pdf
+  phantomjs rasterize.js $1 "$assets/tmp.jpg" 3508x4961 1
+  convert "$assets/tmp.jpg" -modulate 100,0 $printbox/$now.pdf
 }
 function preprocessimages (){
   
@@ -21,7 +20,7 @@ function preprocessimages (){
     
     now=$(date +"%Y%m%d_%H%M%S")
     
-    convert $pic -format jpg -auto-orient -resize 800x800 -type GrayScaleMatte $import/$now.jpg
+    convert $pic -format jpg -auto-orient -resize 2000x -type GrayScaleMatte $import/$now.jpg
     mv $pic $archives/$pic_name
   done
 }
@@ -40,8 +39,8 @@ function print {
     stepname=$(basename $step)
     archivePath=$printoutbox$stepname
     
-    mv $step $archivePath # copy in outbox (archives)
-    lpr -P $printer -o media=A3 -o ColorModel=KGray $archivePath #-o fit-to-page
+    mv -v $step $archivePath # copy in outbox (archives)
+    lpr -P $printer -o media=A3 -o ColorModel=KGray -o fit-to-page $archivePath 
     
     printf "\t~ print \t $printcount \t\t $stepname \n\t_\t \t $(date +"%H.%M.%S")\n\n"
     
@@ -63,22 +62,24 @@ function importFormShareFolder {
   if [[ $filecount > 0 ]]
   then
     detox -rv $source
+    mv -fv $source/* $target
     
-    for type in "${mediatype[@]}"; do
-      case "$sourcetype" in
-        pic) 
-          sourcetypename="picture"
-        ;;
-        sca) 
-          sourcetypename="scanner"
-        ;;
-        * ) 
-          sourcetypename="Not processed"
-          mv $source/*.$type $target > /dev/null 2>&1
-        ;;
-      esac
-    done
+    # for type in "${mediatype[@]}"; do
+    #       case "$sourcetype" in
+    #         pic) 
+    #           sourcetypename="picture"
+    #         ;;
+    #         sca) 
+    #           sourcetypename="scanner"
+    #         ;;
+    #         * ) 
+    #           sourcetypename="Not processed"
+    #           mv "$source/*.$type" $target
+    #         ;;
+    #       esac
+    #     done
   fi
+  
   printf "$sourcename \t $filecount file \t type : $sourcetypename ($sourcetype)\n\n"
 }
 
@@ -88,7 +89,7 @@ import=$assets"00-import"
 printbox=$assets"01-printbox"
 archives=$assets"02-archives"
 replay=$assets"03-replay"
-inboxsources=( "$import/photoNC" "$import/photoBV" "/Volumes/photo_canon" "/Volumes/Home\ Directory/Documents/degre48/scanner/assets" )
+inboxsources=( "$import/photoNC" "$import/photoBV" "$import/scanpi" ) # "/Volumes/photo_canon" 
 
 # params
 interval=${1-10}
@@ -102,17 +103,19 @@ while true; do
   clear
   echo "getsources ..."
   
-  # get from sources
-  for inboxsource in "${inboxsources[@]}"; do
-    importFormShareFolder $inboxsource $import/pictures/ $mediatype
-  done
+  importFormShareFolder "$import/photoNC/" "$import/pictures/"
+  importFormShareFolder "$import/photoBV/" "$import/pictures/"
+  importFormShareFolder "$import/scanpi/" "$import/pictures/"
+  importFormShareFolder "/Volumes/photo_canon/" "$import/pictures/"
+  importFormShareFolder "$import/piscan/" "$import/pictures/"
+  
   
   # image processing
   preprocessimages $import/pictures/
   
   # print
   compilePDF "http://localhost/poster/"
-  # print $printbox $archives"/printedpdf/"
+  print $printbox $archives"/printedpdf/"
   say "print !"
   
   # wait
