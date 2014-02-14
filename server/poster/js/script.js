@@ -15,8 +15,11 @@
     $('.bigtext').bigtext({ maxfontsize: 50 });
 
     setupGrid();
-    if(!settings.refresh)
+    if(!settings.refresh) {
       cleanSRC();
+    } else {
+      window.callPhantom(); 
+    }
   };
 
   /**
