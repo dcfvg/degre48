@@ -108,6 +108,7 @@
     })
     .always(function() {
       console.log("complete");
+      window.callPhantom();
     });
     
   };
