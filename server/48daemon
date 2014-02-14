@@ -5,7 +5,7 @@
 function compilePDF (){
 
   now=$(date +"%y.%m.%d-%H.%M.%S")
-  phantomjs rasterize.js "http://127.0.0.1/poster/" "$printbox/$now.pdf" 1 A3
+  phantomjs rasterize.js $1 "$printbox/$now.pdf" A3 1
   
   #convert "$assets/tmp.pdf" -modulate 100,0 $printbox/$now.pdf
 }
@@ -90,14 +90,14 @@ replay=$assets"03-replay"
 inboxsources=( "$import/test_pic" "$import/test_sca" )
 
 # params
-interval=${1-20}
+interval=${1-10}
 bgColor="#58bfff"
 bgFuzz=20
 printcount=0
 mediatype=(jpg png md)
 
 # main loop
-while false; do
+while true; do
   clear
   echo "getsources ..."
   
@@ -110,7 +110,7 @@ while false; do
   preprocessimages $import/pictures/
   
   # print
-  compilePDF
+  compilePDF "http://192.168.1.34/poster/testcallback.html" &
   print $printbox $archives"/printedpdf/"
   say "print !"
   

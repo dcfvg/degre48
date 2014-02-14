@@ -1,0 +1,18 @@
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+  <h1 id="test">test</h1>
+  <img src="http://imagemagick.org/image/wizard.jpg" alt="">
+  <script>
+  window.onload = function (){
+    console.log("tarte");    
+    setTimeout(function(){
+        var div = document.getElementById('test');
+        div.innerHTML = 'i waited 30000 ms';
+        window.callPhantom();
+    },30000);
+  }
+  </script>
+</body>
