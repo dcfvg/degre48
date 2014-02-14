@@ -5,7 +5,7 @@
 function compilePDF (){
 
   now=$(date +"%y.%m.%d-%H.%M.%S")
-  phantomjs rasterize.js $1 "$printbox/$now.pdf" A3 1
+  phantomjs rasterize.js $1 "$printbox/$now.pdf" A3 1 &
   
   #convert "$assets/tmp.pdf" -modulate 100,0 $printbox/$now.pdf
 }
@@ -53,7 +53,7 @@ function importFormShareFolder {
   mediatype=$3
   
   # count files
-  filecount=$(find $source -type f ! -iname "*sync*" ! -iname "*.DS_Store" -exec printf '.' \; | wc -c  | tr -d ' ')
+  filecount=$(find $source -type f ! -iname "*sync" ! -iname "*.DS_Store" -exec printf '.' \; | wc -c  | tr -d ' ')
   sourcename=$(basename $source)
   sourcetype=${sourcename: -3 :4}
 
@@ -73,7 +73,7 @@ function importFormShareFolder {
         ;;
         * ) 
           sourcetypename="Not processed"
-          cp $source/*.$type $target > /dev/null 2>&1
+          mv $source/*.$type $target > /dev/null 2>&1
         ;;
       esac
     done
@@ -87,7 +87,7 @@ import=$assets"00-import"
 printbox=$assets"01-printbox"
 archives=$assets"02-archives"
 replay=$assets"03-replay"
-inboxsources=( "$import/test_pic" "$import/test_sca" )
+inboxsources=( "$import/photoNC" "$import/photoBV" "/Volumes/photo_canon" )
 
 # params
 interval=${1-10}

@@ -10,7 +10,7 @@ echo "Setting resolution to $dpi dpi"
 fuzz=${3-40}
 echo "Setting fuzz for keying to $fuzz%"
 
-scanA3="epson2:libusb:026:004"
+scanA3="epson2:libusb:001:006"
 scanA4="epson2:libusb:001:006"
 
 hiddenColor="#3485e0"
