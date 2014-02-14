@@ -6,7 +6,7 @@ function compilePDF (){
 
   now=$(date +"%y.%m.%d-%H.%M.%S")
   echo "get $1"
-  phantomjs rasterize.js $1 "$assets/tmp.jpg" 3508x4961 1
+  phantomjs rasterize.js $1 "$assets/tmp.jpg" 3508px*4961px 1
   convert "$assets/tmp.jpg" -modulate 100,0 $printbox/$now.pdf
 }
 function preprocessimages (){
