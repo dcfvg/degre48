@@ -75,7 +75,7 @@ function setupDomList($files){
 function setupLayout($nb_f){
   global $_SCRIPT, $_BODY_CLASSES; // $_META_REFRESH, $_STYLES, ,  
 
-  $refresh = isset($_GET['refresh']) ? 1 : 0;
+  $refresh = (isset($_GET['refresh']) && is_numeric($_GET['refresh'])) ? 1 : 0;
   $_SCRIPT = 'var settings = {nb_items:'.$nb_f.', refresh:'.$refresh.'}';
   
 } 
