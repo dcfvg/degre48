@@ -4,10 +4,14 @@
   padding: 0;
 }
 body {
-  width: 100%;
-  height: 100%;
+  width: 297mm;
+  height: 420mm;
   font-size: 12px;
   overflow: hidden;
+}
+body.refresh {
+  width: 100%;
+  height: 100%;
 }
 body #grid-container {
   width: 100%;
