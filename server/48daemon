@@ -87,7 +87,7 @@ import=$assets"00-import"
 printbox=$assets"01-printbox"
 archives=$assets"02-archives"
 replay=$assets"03-replay"
-inboxsources=( "$import/test_pic" "$import/test_sca" )
+inboxsources=( "$import/photoNC" "$import/photoBV" "/Volumes/photo_canon" )
 
 # params
 interval=${1-10}
