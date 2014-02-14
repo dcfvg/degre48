@@ -1,13 +1,13 @@
 #!/bin/bash
 # set -x
 
+# helpers
 function compilePDF (){
 
   now=$(date +"%y.%m.%d-%H.%M.%S")
-  phantomjs poster/get.js >/dev/null
-  convert assets/step.png -modulate 100,0 assets/01-printbox/$now.pdf  
+  phantomjs rasterize.js "http://127.0.0.1/poster/" "$printbox/$now.pdf" 1 A3
   
-  # open assets/step.png
+  #convert "$assets/tmp.pdf" -modulate 100,0 $printbox/$now.pdf
 }
 function preprocessimages (){
   
@@ -26,12 +26,10 @@ function preprocessimages (){
 }
 function print {
   
-  clear
-  
   printinbox=$1
   printoutbox=$2
   
-  printer=C224e_Labos                    # labos
+  printer=_192_168_1_35                    # labos
   detox -rv $printinbox
   
   for step in `find $printinbox -iname "*.pdf" -type f`
@@ -42,24 +40,45 @@ function print {
     archivePath=$printoutbox$stepname
     
     mv $step $archivePath # copy in outbox (archives)
-    lpr -P $printer -o media=A3 -o ColorModel=KGray -o fit-to-page $archivePath
-
+    lpr -P $printer -o media=A3 -o ColorModel=KGray $archivePath #-o fit-to-page
+    
     printf "\t~ print \t $printcount \t\t $stepname \n\t_\t \t $(date +"%H.%M.%S")\n\n"
     
   done
 }
 function importFormShareFolder {
+  
   source=$1
   target=$2
+  mediatype=$3
   
-  filecount=$(find $source -type f ! -iname "*sync*" -exec printf '.' \; | wc -c  | tr -d ' ')
+  # count files
+  filecount=$(find $source -type f ! -iname "*sync*" ! -iname "*.DS_Store" -exec printf '.' \; | wc -c  | tr -d ' ')
+  sourcename=$(basename $source)
+  sourcetype=${sourcename: -3 :4}
+
+  # pre-processing
   
   if [[ $filecount > 0 ]]
   then
     detox -rv $source
-    mv $source/*.jpg $target
-    mv $source/*.png $target
+    
+    for type in "${mediatype[@]}"; do
+      case "$sourcetype" in
+        pic) 
+          sourcetypename="picture"
+        ;;
+        sca) 
+          sourcetypename="scanner"
+        ;;
+        * ) 
+          sourcetypename="Not processed"
+          cp $source/*.$type $target > /dev/null 2>&1
+        ;;
+      esac
+    done
   fi
+  printf "$sourcename \t $filecount file \t type : $sourcetypename ($sourcetype)\n\n"
 }
 
 # path
@@ -68,21 +87,23 @@ import=$assets"00-import"
 printbox=$assets"01-printbox"
 archives=$assets"02-archives"
 replay=$assets"03-replay"
+inboxsources=( "$import/test_pic" "$import/test_sca" )
 
 # params
 interval=${1-20}
 bgColor="#58bfff"
 bgFuzz=20
 printcount=0
-
-inboxsources=( "/Users/benoit/Desktop/phone" "/Volumes/capture-MacBook-Pro-de-Brice-2" )
+mediatype=(jpg png md)
 
 # main loop
-while true; do
+while false; do
+  clear
+  echo "getsources ..."
   
   # get from sources
   for inboxsource in "${inboxsources[@]}"; do
-    importFormShareFolder $inboxsource $import/pictures/
+    importFormShareFolder $inboxsource $import/pictures/ $mediatype
   done
   
   # image processing
@@ -91,6 +112,7 @@ while true; do
   # print
   compilePDF
   print $printbox $archives"/printedpdf/"
+  say "print !"
   
   # wait
   for (( i=$interval; i>0; i--)); do
@@ -99,6 +121,4 @@ while true; do
     wait
     printf "                   \r"
   done
-  clear
-
 done
