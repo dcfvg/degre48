@@ -112,6 +112,7 @@ while false; do
   # print
   compilePDF
   print $printbox $archives"/printedpdf/"
+  say "print !"
   
   # wait
   for (( i=$interval; i>0; i--)); do
