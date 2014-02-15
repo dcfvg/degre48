@@ -23,3 +23,5 @@ assets
 server/iphone
 
 *.db
+
+/server/poster/less/css/
