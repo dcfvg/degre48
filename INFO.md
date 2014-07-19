@@ -6,3 +6,8 @@ Un appareil photo lié à une table homothétique au format A3
 Un smartphone
 Un appareil photo 
 
+## utilisation 
+- 14/02/14
+
+## dépendances
+
