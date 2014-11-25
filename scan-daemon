@@ -25,19 +25,19 @@ function scan {
 	scanimage --format tiff --resolution $dpi -d $scanA3 -p > $assets/A3.tiff
   rm $assets/A3.tiff
 
-
-
   echo "last scan $now" >> $assets/last.txt
 }
 
-git pull origin 
+#git pull origin 
 
-while true; do 
-  scan
-  for (( i=$freq; i>0; i--)); do
-    sleep 1 &
-    printf "next shot in $i s \r"
-    wait    
-    printf "                  \r"
-  done
-done
+scan
+
+# while true; do 
+#   scan
+#   for (( i=$freq; i>0; i--)); do
+#     sleep 1 &
+#     printf "next shot in $i s \r"
+#     wait    
+#     printf "                  \r"
+#   done
+# done
