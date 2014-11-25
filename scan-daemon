@@ -14,6 +14,8 @@ mkdir $assets
 
 function scan {
   
+  now=$(date +"%y.%m.%d-%H.%M.%S")
+  
   # config scanner 
   # 1. scanimage -L
   # 2. copy the adress ( ex. epson2:libusb:001:006 ) to the -d param
@@ -22,7 +24,13 @@ function scan {
   echo "scan A3 Epson ES-7000H      "
 	scanimage --format tiff --resolution $dpi -d $scanA3 -p > $assets/A3.tiff
   rm $assets/A3.tiff
+
+
+
+  echo "last scan $now" >> $assets/last.txt
 }
+
+git pull origin 
 
 while true; do 
   scan
