@@ -22,9 +22,10 @@ function scan {
   # remove d for one scan ?
   
   echo "scan A3 Epson ES-7000H      "
-	scanimage --format tiff --resolution $dpi -d $scanA3 -p > $assets/A3.tiff
-  rm $assets/A3.tiff
+	#scanimage --format tiff --resolution $dpi -d $scanA3 -p > $assets/A3.tiff
+  #rm $assets/A3.tiff
 
+  rm $assets/last.txt
   echo "last scan $now" >> $assets/last.txt
 }
 
