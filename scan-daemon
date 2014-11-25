@@ -19,19 +19,26 @@ function scan {
   # config scanner 
   # 1. scanimage -L
   # 2. copy the adress ( ex. epson2:libusb:001:006 ) to the -d param
-  # remove d for one scan ?
+  # remove d for one scan ? -d $scanA3 
   
   echo "scan A3 Epson ES-7000H      "
-	#scanimage --format tiff --resolution $dpi -d $scanA3 -p > $assets/A3.tiff
-  #rm $assets/A3.tiff
-
+	scanimage --format tiff --resolution $dpi -p > $assets/A3.tiff
+  
+  rm $assets/A3.tiff
   rm $assets/last.txt
+  
   echo "last scan $now" >> $assets/last.txt
 }
 
 #git pull origin 
 
 scan
+
+# cron log ; 
+# tail /var/log/syslog
+
+# cron task running
+# ps aux | grep cron
 
 # while true; do 
 #   scan
